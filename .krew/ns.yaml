@@ -15,16 +15,20 @@ spec:
     as you type.
   platforms:
   - selector:
-      matchExpressions:
-      - key: os
-        operator: In
-        values:
-        - darwin
-        - linux
-    {{addURIAndSha "https://github.com/ahmetb/kubectx/archive/{{ .TagName }}.tar.gz" .TagName }}
+      matchLabels:
+        os: darwin
+        arch: amd64
+    {{addURIAndSha "https://github.com/ahmetb/kubectx/releases/download/{{ .TagName }}/kubens_{{ .TagName }}_darwin_x86_64.tar.gz" .TagName }}
     bin: kubens
-    files:
-    - from: kubectx-*/kubens
-      to: .
-    - from: kubectx-*/LICENSE
-      to: .
+  - selector:
+      matchLabels:
+        os: linux
+        arch: amd64
+    {{addURIAndSha "https://github.com/ahmetb/kubectx/releases/download/{{ .TagName }}/kubens_{{ .TagName }}_linux_x86_64.tar.gz" .TagName }}
+    bin: kubens
+  - selector:
+      matchLabels:
+        os: windows
+        arch: amd64
+    {{addURIAndSha "https://github.com/ahmetb/kubectx/releases/download/{{ .TagName }}/kubens_{{ .TagName }}_windows_x86_64.zip" .TagName }}
+    bin: kubens
